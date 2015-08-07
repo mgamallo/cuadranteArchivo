@@ -1,0 +1,327 @@
+@CHARSET "ISO-8859-1";
+
+body{
+	background-color: rgb(238, 238, 238);
+	margin: 0px;
+	padding: 0px;
+}
+
+nav{
+	height: 50px;
+}
+
+.fila, .mes{
+	text-align: center;
+	width: /* 850px;   */ 1000px;
+	margin: 0 auto;
+}
+
+
+.nombres{
+	float: left;
+	width: 150px;
+	/* background-color: green; */
+	/*	visibility: hidden;   */
+}
+
+.derecha{
+	float: left;
+	width: 850px;
+}
+
+
+.nombremes{
+	float: left;
+	background-color: #4BA3DF;
+	width: 150px;
+	padding: 5px 0 0 20px;  
+	font: x-large bold ,serif;
+	color: white;
+	text-align: left;
+	border-top-left-radius: 13px;
+	border-top-right-radius: 13px;
+}
+
+.linea{
+	float: left;
+	height: 5px;
+	width: 850px;
+	background-color: #4BA3DF;   /*  #2ECC70; */
+	margin-bottom: 5px;
+}
+
+
+.fila .nombres{
+	float: left;
+	width: 150px;
+	/* background-color: yellow; */
+	/*	visibility: hidden;   */
+}
+
+.semana .nombres{
+	float: left;
+	width: 150px;
+	/* background-color: yellow;  */
+}
+.fila .dias{
+	width: 1000px;
+	
+}
+
+.fila div{
+	 width: 1000px; 
+}
+
+.fila div div{
+    
+    background-color: #F6B8AA;
+    
+	float: left;
+	text-align: center;
+	
+	width: 1.7%;
+	height: auto;
+	padding: 3px;
+	margin-right: 3px;
+	margin-bottom: 3px;
+	color: white;
+		
+	transition: transform 1s;
+	
+	cursor: pointer;
+}
+
+.semana .diassemana{
+	float: left;
+	background-color: white;
+	color: #F6B8AA;
+	width: 850px;
+}
+
+.semana{	
+	text-align: center;
+	width: 1000px;
+	margin: 0 auto;
+
+}
+
+.diassemana div{
+	
+	float: left;
+	text-align: center;
+	
+	width: 2%;
+	height: auto;
+	padding: 3px;
+	margin-right: 3px;
+	margin-bottom: 7px;
+	
+	font-weight: bold;
+	
+	}
+
+.fila div div:hover{
+	background-color: red;
+	color: white;
+	transform: scale(1.5,1.5);
+}
+
+.fila div .festivo{
+	background-color: #FF566F;
+}
+
+.semana .festivo{
+	color: #FF566F;
+}
+
+.salto{
+	margin-left: 8px;
+}
+
+.fila div .m{
+	font-weight: normal;
+	background-color: #CCE8DF;
+}
+
+.fila div .t{
+	font-weight: normal;
+	background-color: #F6B857;
+}
+
+.fila div .l{
+	font-weight: normal;
+	background-color: #496D89;
+	
+}
+
+.fila div .s{
+	font-weight: normal;
+	background-color: #fc5227;
+	
+}
+
+.fila div .salto{
+	font-weight: normal;
+}
+
+.fila .cuarta div{
+	margin-bottom: 10px;
+}
+
+.fila div .spanlinea{
+	display: block;
+	float: left;
+	height: 5px;
+	background-color: #4BA3DF;   /*  #2ECC70; */
+	margin-bottom: 5px;
+	
+	text-align: center;
+	width: 850px;
+	margin: 0 auto;
+}
+
+.oculto{
+	visibility: hidden;
+}
+
+.nombres .alias{
+	background-color: #4BA3DF;
+	width: 60%;
+	text-align: left;
+	padding-left: 35px;
+	
+	/* border-bottom-right-radius: 29px; */
+	border-top-right-radius: 29px;
+	-moz-top-right-radius: 29px;
+	-webkit-top-right-radius: 29px;
+	
+	border-bottom-left-radius: 29px;
+	-moz-bottom-left-radius: 29px;
+	-webkit-bottom-left-radius: 29px;
+}
+
+.nombres .alias:hover{
+	background-color: #2ECC70;
+	transform: scale(1.2,1.2);
+}
+
+.nombres .c1{
+	background-color: #F2373D;
+}
+
+.nombres .c2{
+	background-color: #F9C162;
+}
+
+.nombres .c3{
+	background-color: #50BAB6;
+}
+
+.nombres .c4{
+	background-color: #84ECB9;
+}
+
+.cuadrante{
+	border-radius: 50%;
+	-moz-radius: 50%;
+	-webkit-radius: 50%;	
+}
+
+.seccion{
+	
+	
+	border: 1px solid #cacaca;
+	
+	border-radius: 10px;
+	-moz-radius: 10px;
+	-webkit-radius: 10px;	
+	
+	width: 1100px;
+	min-height: 500px;
+
+	text-align: center;
+	background-color: white;
+	margin: 20px auto;
+	padding: 30px 0 0 0;
+
+}
+
+#header {
+
+  height: 41px;
+  text-align: center;
+  background: white;
+  z-index: 10000;
+  border-bottom: 1px solid #c8c8c8;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
+  
+  width: 100%;
+}
+
+.wrapper {
+  float: left;
+  width: 70%;
+  margin: 0px auto 0px auto;
+  text-align: left;
+}
+
+#header h1 a {
+  display: block;
+  width: 200px;
+  height: 41px;
+  background: url(/i/v3/pocket_logo.png) left center no-repeat;
+  text-indent: -789em;
+}
+
+a {
+  cursor: pointer;
+  color: #478f8f;
+}
+
+
+user agent stylesheeta:-webkit-any-link {
+  color: -webkit-link;
+  text-decoration: underline;
+  cursor: auto;
+}
+
+#header #nav {
+  list-style: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 40%;
+}
+
+#header #nav li {
+  float: left;
+}
+
+#header #nav li {
+  float: left;
+}
+
+.login {
+  margin-left: 16px;
+}
+
+#header #nav li a {
+  display: block;
+  /* line-height: 20px; */
+  border-top: 4px solid white;
+  height: 32px;
+  padding: 0px 15px;
+  font-size: 12px;
+  color: #777777;
+  font-weight: bold;
+  font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
+  text-decoration: none;
+}
+
+#año{
+	margin-right: 35px;
+	width: 100%;
+	font-size: 34px;
+	font-weight: bold;
+	color: #4BA3DF;
+}
