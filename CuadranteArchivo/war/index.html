@@ -3,7 +3,12 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title> Cuadrante</title>
+	
 	<link rel="stylesheet" type="text/css" href="css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="css/dropdown.css"/>
+	
+	<script src="js/modernizr.custom.63321.js"></script>
+	
 	<script type="text/javascript">
 	
 		function peticion( nodo){
@@ -19,602 +24,372 @@
 		}
 	
 	</script>
+	
+	<script type="text/javascript">
+	
+		var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+		var plantilla = [];
+		plantilla[0] = ['L','T','T','M','M','M','L'];
+		plantilla[1] = ['L','M','M','M','M','T','L'];
+		plantilla[2] = ['L','M','M','M','T','M','L'];
+		plantilla[3] = ['L','M','M','T','M','M','L'];
+		plantilla[4] = ['L','M','T','M','M','M','L'];
+		plantilla[5] = ['L','T','M','M','M','M','L'];
+		plantilla[6] = ['L','M','M','M','M','T','L'];
+		plantilla[7] = ['L','M','M','T','T','M','L'];
+		plantilla[8] = ['L','M','T','M','M','M','L'];
+		plantilla[9] = ['L','T','M','M','M','M','L'];
+		plantilla[10] = ['L','M','M','M','M','T','L'];
+		plantilla[11] = ['L','M','M','M','T','M','L'];
+		plantilla[12] = ['L','M','M','T','M','M','L'];
+		
+		var user = ['Ana','Ruben','Isa','Toni','Salva','Asun','Conchi','Irene','Juanma','Oscar','Manuel','Esther','Iago'];
+		
+	</script>
+	
+	
+	<script type="text/javascript">
+		function inicializar(){
+			generarCabeceraDias("2015-09");
+		}
+		
+		function selMes(mesElegido, numMes){
+			document.getElementById('mes').innerHTML = mesElegido;
+			generarCabeceraDias("2015-" + numMes);
+		}
+	</script>
+	
+	<script type="text/javascript">
+	
+		var indiceMadre = 4;  // Referido a agosto de 2015
+	
+		var diasSemana = new Array("Do","Lu","Ma","Mi","Ju","Vi","Sa");
+	 	var diasMes = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+
+	
+		function generarCabeceraDias(fecha){
+			
+			// http://www.desarrolloweb.com/articulos/ejemplos/tallerjs/fechas-con-javascript.html
+			
+			// fecha = "2015-07-01"
+			// fecha = "2015-07"
+			
+			var fechaElegida = new Date(fecha);
+			var fechaOrigen = new Date('2015-08');
+			
+			var añoOrigen = fechaOrigen.getFullYear();
+			var mesOrigen = fechaOrigen.getMonth()+1;
+		
+			var ano = fechaElegida.getFullYear();
+			var mes = fechaElegida.getMonth();
+			
+			var mesesTranscurridos = (ano*12 + mes + 1) - (añoOrigen*12 + mesOrigen);
+			
+			/*
+			alert(fechaElegida);
+			alert('Meses transcurridos: ' + mesesTranscurridos);
+			*/
+			
+			var indiceCorregido;
+			var n = (12 + mesesTranscurridos) % 13;
+			if(n == 0){
+				n=13;
+			}
+			
+			// alert(n);
+			
+			
+			document.getElementById('mes').innerHTML = meses[mes];
+			document.getElementById('año').innerHTML = ano;
+			
+			
+		//	alert(mes + 1);
+			
+		/*
+			var indiceCorregido;
+			var n = (mes + 1 - 8) % 12;
+			
+			alert(n);
+			
+			if(n > 13 ){
+				indiceCorregido = n % 13;
+			}
+			else{
+				indiceCorregido = n;
+			}
+			
+			alert('indiceCorregido ... ' + indiceCorregido);
+		*/
+			var diaMaximo = diasMes[mes];
+		
+		 	if (mes == 1 && (((ano % 4 == 0) && (ano % 100 != 0)) || (ano % 400 == 0)))
+			    diaMaximo = 29;
+			
+			var codigo = ""; 
+			
+			for(var i= 1;i<=diaMaximo;i++){
+
+				if(fechaElegida.getDay() == 0){
+					codigo = codigo + "<div class='festivo'>" + i + "</div>";
+				}
+				else if(fechaElegida.getDay() == 1){
+					codigo = codigo + "<div class='salto'>" + i + "</div>";
+				}
+				else{
+					codigo = codigo + "<div>" + i + "</div>";
+				}
+					
+				fechaElegida.setDate(fechaElegida.getDate() + 1);	
+			}
+
+
+			
+			var nodo = document.getElementById('fila');
+			var nodoNuevo = document.createElement('div');
+			nodoNuevo.id = 'dias';
+			nodoNuevo.setAttribute('class', 'dias');
+			nodoNuevo.innerHTML = codigo;
+			nodo.appendChild(nodoNuevo);
+			
+			
+			var codigoNombresDias = "";
+			
+			var fechaElegida = new Date(fecha);
+			
+			for(var i = 1; i<=diaMaximo;i++){
+				var diaSem = fechaElegida.getDay();
+				
+				var day ;
+				switch (diaSem) {
+				    case 0:
+				        day = "<div class='festivo'>Do</div>";
+				        break;
+				    case 1:
+				        day = "<div class='salto'>Lu</div>";
+				        break;
+				    case 2:
+				        day = "<div>Ma</div>";
+				        break;
+				    case 3:
+				        day = "<div>Mi</div>";
+				        break;
+				    case 4:
+				        day = "<div>Ju</div>";
+				        break;
+				    case 5:
+				        day = "<div>Vi</div>";
+				        break;
+				    case 6:
+				        day = "<div>Sa</div>";
+				        break;
+				}
+				codigoNombresDias = codigoNombresDias + day;
+				
+				fechaElegida.setDate(fechaElegida.getDate() + 1);	
+
+			}
+			
+			var nodo = document.getElementById('semana');
+			var nodoNuevo = document.createElement('div');
+			nodoNuevo.id = 'diassemana';
+			nodoNuevo.setAttribute('class', 'diassemana');
+			nodoNuevo.innerHTML = codigoNombresDias;
+			nodo.appendChild(nodoNuevo);
+			
+			/////////////////////////////////////////////////////////////////////////////
+			
+			var codigoFila = "";
+			var long = user.length;
+			
+			var indiceSemana = indiceMadre;
+			
+			for(var j=0;j<long;j++){
+				
+				var color = j % 4;
+				color++;
+				codigoFila += "<div class='fila'><div class='nombres'><div class='alias c" + color + "' id='" + user[j] + "'>" + user[j] + "</div></div>";
+				
+				if(color == 4){
+					codigoFila += "<div class='cuarta'>";
+				}
+				else{
+					codigoFila += "<div>";
+				}
+				
+				var codigoNombresDias = "";
+				fechaElegida = new Date(fecha);
+				
+				var indiceSemanaUsuario = indiceSemana;
+				
+				for(var i = 1; i<=diaMaximo;i++){
+					var diaSem = fechaElegida.getDay();
+					
+					
+					var day ;
+					switch (diaSem) {
+					    case 0:
+					        day = "<div class='festivo cuadrante";
+					        break;
+					    case 1:
+					        day = "<div class='salto cuadrante";
+					        indiceSemanaUsuario++;
+					        if(indiceSemanaUsuario == 14){
+					        	indiceSemanaUsuario = 1;
+					        }
+					        break;
+					    case 2:
+					        day = "<div class='cuadrante";
+					        break;
+					    case 3:
+					        day = "<div class='cuadrante";
+					        break;
+					    case 4:
+					        day = "<div class='cuadrante";
+					        break;
+					    case 5:
+					        day = "<div class='cuadrante";
+					        break;
+					    case 6:
+					        day = "<div class='cuadrante";
+					        break;
+					}
+					
+					
+					var calculado = " " + plantilla[indiceSemanaUsuario-1][diaSem].toLowerCase() + "'>" + plantilla[indiceSemanaUsuario-1][diaSem];
+					
+					codigoFila = codigoFila + day + calculado;
+					codigoFila += "</div>";
+					
+					fechaElegida.setDate(fechaElegida.getDate() + 1);	
+					
+					
+					}
+				
+					indiceSemana++;
+					if(indiceSemana == 14){
+						indiceSemana = 1;
+				}
+				
+				codigoFila += "</div></div>";
+
+				
+				
+				
+				
+				
+			}
+			
+
+			
+			var nodo = document.getElementById('usuarios');
+			var nodoNuevo = document.createElement('div');
+			nodoNuevo.innerHTML = codigoFila;
+			nodo.appendChild(nodoNuevo);
+			
+		}
+	
+		
+	</script>
 </head>
-<body>
+<body onload="inicializar()">
 
-<!--  <a href="inicio" style='display: none;'> Inicio </a> -->
 
-<div id="header">
-	
-    <div class="wrapper">
+	<!--  <a href="inicio" style='display: none;'> Inicio </a> -->
 
-        <h1><a href="#"></a></h1>
-        
-        <ul id="nav">
-			<li><a href="#">Perfil</a></li>
-        	<li><a href="#">Historial</a></li>
-        	<li><a href="#">Estadistica</a></li>
-        	<li><a href="#">Ayuda</a></li>
-        	<li class="login"><span><a href="#">Salir</a></span></li>        </ul>
-        
-    </div>
-        
-</div>
+	<div id="header">
 
-<div class='seccion'>
-	<div class='mes'>
-		<div class='nombres'>
-			<span id='año'> 2015 </span>
-		</div>
-		<div class='derecha'>
-			<div class='nombremes' id='mes'> Septiembre </div>
-			<div class='linea'></div>
+		<div class="wrapper">
+
+			<h1>
+				<a href="#"></a>
+			</h1>
+
+			<ul id="nav">
+				<li><a href="#">Perfil</a></li>
+				<li><a href="#">Historial</a></li>
+				<li><a href="#">Estadistica</a></li>
+				<li><a href="#">Ayuda</a></li>
+				<li class="login"><span><a href="#">Salir</a></span></li>
+			</ul>
+
 		</div>
 
 	</div>
 
-<div class='encabezado'>
-	<div class='fila'>
-		<div class='nombres oculto'>
-			Vacio
-		</div>
-		<div class='dias'>
-			<div>1</div>
-			<div>2</div>
-			<div>3</div>
-			<div>4</div>
-			<div>5</div>
-			<div>6</div>
-			<div class='festivo'>7</div>
-			<div class='salto'>8</div>
-			<div>9</div>
-			<div>10</div>
-			<div>11</div>
-			<div>12</div>
-			<div>13</div>
-			<div class='festivo'>14</div>
-			<div class='salto'>15</div>
-			<div>16</div>
-			<div>17</div>
-			<div>18</div>
-			<div>19</div>
-			<div>20</div>
-			<div class='festivo'>21</div>
-			<div class='salto'>22</div>
-			<div>23</div>
-			<div>24</div>
-			<div>25</div>
-			<div>26</div>
-			<div>27</div>
-			<div class='festivo'>28</div>
-			<div class='salto'>29</div>
-			<div>30</div>
-			<div>31</div>
-		</div>
-	</div>
-</div>
-
-	<div class='semana'>
-		<div class='nombres oculto'>
-			Dias
-		</div>
-		<div class='diassemana'>
-			<div class='hola'>Lu</div>
-			<div>Ma</div>
-			<div>Mi</div>
-			<div>Ju</div>
-			<div>Vi</div>
-			<div>Sa</div>
-			<div class='festivo'>Do</div>
-			<div class='salto'>Lu</div>
-			<div>Ma</div>
-			<div>Mi</div>
-			<div>Ju</div>
-			<div>Vi</div>
-			<div>Sa</div>
-			<div class='festivo'>Do</div>
-			<div class='salto'>Lu</div>
-			<div>Ma</div>
-			<div>Mi</div>
-			<div>Ju</div>
-			<div>Vi</div>
-			<div>Sa</div>
-			<div class='festivo'>Do</div>
-			<div class='salto'>Lu</div>
-			<div>Ma</div>
-			<div>Mi</div>
-			<div>Ju</div>
-			<div>Vi</div>
-			<div>Sa</div>
-			<div class='festivo'>Do</div>
-			<div class='salto'>Lu</div>
-			<div>Ma</div>
-			<div>Mi</div>
-		</div>
-	</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c1'> Manu </div>
-	</div>
-	<div >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='s'>M</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c2 myButton'> Asun </div>
-	</div>
-	<div >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c3'> Asun </div>
-	</div>
-	<div >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c4'> Asun </div>
-	</div>
-	<div class='cuarta' >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c1'> Asun </div>
-	</div>
-	<div >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c2'> Asun </div>
-	</div>
-	<div >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c3' id='n8'> Irene </div>
-	</div>
-	<div >
-		<div class='m cuadrante' id='8_01' onclick='peticion(this);'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c4'> Ruben </div>
-	</div>
-	<div class='cuarta' >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c1'> Asun </div>
-	</div>
-	<div >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c2'> Asun </div>
-	</div>
-	<div >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres c3'>
-		<div class='alias'> Asun </div>
-	</div>
-	<div >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-<div class='fila'>
-	<div class='nombres'>
-		<div class='alias c4'> Asun </div>
-	</div>
-	<div class='cuarta' >
-		<div class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div class='m cuadrante'>M</div>
-		<div  class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto t cuadrante'>T</div>
-		<div class='t cuadrante'>T</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='l cuadrante'>L</div>
-		<div class='festivo l cuadrante'>L</div>
-		<div class='salto m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-		<div  class='m cuadrante'>M</div>
-	</div>
-</div>
-
-
-<div class='fila'>
-	<div class='nombres oculto'>
-		fin
-	</div>
+<!--  
 	<div>
-		<span class='spanlinea'></span>
+		<select>
+			<option value="Enero">Enero</option>
+			<option value="Febrero">Febrero</option>
+			<option value="Marzo">Marzo</option>
+			<option value="Abril">Abril</option>
+			<option value="Mayo">Mayo</option>
+			<option value="Junio">Junio</option>
+			<option value="Julio">Julio</option>
+			<option value="Agosto">Agosto</option>
+			<option value="Septiembre">Septiembre</option>
+			<option value="Octubre">Octubre</option>
+			<option value="Noviembre">Noviembre</option>
+			<option value="Diciembre">Diciembre</option>
+		</select>
 	</div>
-	
-</div>
-</div>
+-->
 
-<div class='seccion'>
+	<div class='seccion'>
+		<div class='mes'>
+			<div class='nombres'>
+				<span id='año'> 2015 </span>
+			</div>
+			<div class='derecha'>
+				<ul>
+					<li class='nombremes'><span id='mes'>Septiembre</span>
+						<ul>
+							<li id="Enero" onclick="selMes('Enero','01');">Enero</li>
+							<li id="Febrero" onclick="selMes('Febrero','02');">Febrero</li>
+							<li id="Marzo" onclick="selMes('Marzo','03');">Marzo</li>
+							<li id="Abril" onclick="selMes('Abril','04');">Abril</li>
+							<li id="Mayo" onclick="selMes('Mayo','05');">Mayo</li>
+							<li id="Junio" onclick="selMes('Junio','06');">Junio</li>
+							<li id="Julio" onclick="selMes('Julio','07');">Julio</li>
+							<li id="Agosto" onclick="selMes('Agosto','08');">Agosto</li>
+							<li id="Septiembre" onclick="selMes('Septiembre','09');">Septiembre</li>
+							<li id="Octubre" onclick="selMes('Octubre','10');">Octubre</li>
+							<li id="Noviembre" onclick="selMes('Noviembre','11');">Noviembre</li>
+							<li id="Diciembre" onclick="selMes('Diciembre','12');">Diciembre</li>					
+						</ul>
+					</li>
+				</ul>
+				<div class='linea'></div>
+			</div>
 
-</div>
+		</div>
+
+		<div class='encabezado'>
+			<div class='fila' id='fila'>
+				<div class='nombres oculto'>Vacio</div>
+
+			</div>
+		</div>
+
+		<div class='semana' id='semana'>
+			<div class='nombres oculto'>Dias</div>
+
+		</div>
+
+		<div id='usuarios'></div>
+
+		<div class='fila'>
+			<div class='nombres oculto'>fin</div>
+			<div>
+				<span class='spanlinea'></span>
+			</div>
+
+		</div>
+	</div>
+
+	<div class='seccion'></div>
+
+
 </body>
 </html>
